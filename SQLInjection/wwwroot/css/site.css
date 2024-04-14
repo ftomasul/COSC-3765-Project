@@ -66,3 +66,11 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.user-input {
+    padding-top: 50px;
+}
+
+.display-employee {
+    padding-top: 50px;
+}

@@ -1,0 +1,11 @@
+@page "/profile/{user}"
+
+<PageTitle>Vulnerable</PageTitle>
+
+<h1>Welcome to @User's super secret profile</h1>
+<a href="/">Back to login</a>
+
+@code {
+    [Parameter]
+    public string? User {get; set;}
+}

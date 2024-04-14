@@ -1,0 +1,65 @@
+@page "/"
+@using Microsoft.Data.Sqlite
+@using SQLInjection.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<EmployeeDataContext> EmployeeDataContextFactory;
+
+<PageTitle>Vulnerable</PageTitle>
+
+<div class="user-input">
+    <label for="inputUser">Username:</label>
+    <input id="inputPass" @bind="username" />
+    <label for="inputPass">Password:</label>
+    <input id="inputPass" @bind="password" />
+    <button @onclick="GetEmployee">Submit</button>
+</div>
+
+<div class = "error-message">
+    @if(error != null)
+    {
+        @error
+    }
+</div>
+
+@code {
+    private string? username;
+    private string? password;
+    public Employee? emp {get; set;}
+    public string? error;
+    [Inject] private NavigationManager NavMan {get; set;}
+    private EmployeeDataContext? _context;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    public async Task GetEmployee()
+    {
+        emp = null;
+        error = null; 
+
+        _context ??= await EmployeeDataContextFactory.CreateDbContextAsync();
+
+        if (_context is not null)
+        {
+            try
+            {
+                string query = "SELECT * FROM Employee WHERE username = '" + username + "' and password = '" + password + "'";
+                emp = await _context.Employees.FromSqlRaw(query).FirstOrDefaultAsync();
+                
+                if (emp == null)
+                {
+                    error = "Username or assword incorrect";
+                }
+                else
+                {
+                    NavMan.NavigateTo($"/profile/{emp.Name}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error fetching user: " + ex.Message);
+            }
+        }
+    }
+}
