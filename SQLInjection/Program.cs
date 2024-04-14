@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using SQLInjection.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("EmployeeDB");
+var connectionString = builder.Configuration.GetConnectionString("UserDB");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddDbContextFactory<EmployeeDataContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContextFactory<UserDataContext>(options => options.UseSqlite(connectionString));
 
 var app = builder.Build();
 

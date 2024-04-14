@@ -9,8 +9,8 @@ using SQLInjection.Data;
 
 namespace SQLInjection.Migrations
 {
-    [DbContext(typeof(EmployeeDataContext))]
-    [Migration("20240413190107_InitialCreate")]
+    [DbContext(typeof(UserDataContext))]
+    [Migration("20240414140258_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace SQLInjection.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("SQLInjection.Data.Employee", b =>
+            modelBuilder.Entity("SQLInjection.Data.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace SQLInjection.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee", (string)null);
+                    b.ToTable("User", (string)null);
 
                     b.HasData(
                         new

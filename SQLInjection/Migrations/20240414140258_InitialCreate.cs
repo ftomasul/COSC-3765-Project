@@ -13,7 +13,7 @@ namespace SQLInjection.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -24,11 +24,11 @@ namespace SQLInjection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "Employee",
+                table: "User",
                 columns: new[] { "Id", "Name", "Password", "Username" },
                 values: new object[,]
                 {
@@ -42,7 +42,7 @@ namespace SQLInjection.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "User");
         }
     }
 }

@@ -2,7 +2,7 @@
 @using Microsoft.Data.Sqlite
 @using SQLInjection.Data
 @using Microsoft.EntityFrameworkCore
-@inject IDbContextFactory<EmployeeDataContext> EmployeeDataContextFactory;
+@inject IDbContextFactory<UserDataContext> UserDataContextFactory;
 
 <PageTitle>Vulnerable</PageTitle>
 
@@ -11,7 +11,7 @@
     <input id="inputPass" @bind="username" />
     <label for="inputPass">Password:</label>
     <input id="inputPass" @bind="password" />
-    <button @onclick="GetEmployee">Submit</button>
+    <button @onclick="GetUser">Submit</button>
 </div>
 
 <div class = "error-message">
@@ -24,32 +24,32 @@
 @code {
     private string? username;
     private string? password;
-    public Employee? emp {get; set;}
+    public User? emp {get; set;}
     public string? error;
     [Inject] private NavigationManager NavMan {get; set;}
-    private EmployeeDataContext? _context;
+    private UserDataContext? _context;
     protected override void OnInitialized()
     {
         base.OnInitialized();
     }
 
-    public async Task GetEmployee()
+    public async Task GetUser()
     {
         emp = null;
         error = null; 
 
-        _context ??= await EmployeeDataContextFactory.CreateDbContextAsync();
+        _context ??= await UserDataContextFactory.CreateDbContextAsync();
 
         if (_context is not null)
         {
             try
             {
-                string query = "SELECT * FROM Employee WHERE username = '" + username + "' and password = '" + password + "'";
-                emp = await _context.Employees.FromSqlRaw(query).FirstOrDefaultAsync();
+                string query = "SELECT * FROM User WHERE username = '" + username + "' and password = '" + password + "'";
+                emp = await _context.Users.FromSqlRaw(query).FirstOrDefaultAsync();
                 
                 if (emp == null)
                 {
-                    error = "Username or assword incorrect";
+                    error = "Username or password incorrect";
                 }
                 else
                 {
